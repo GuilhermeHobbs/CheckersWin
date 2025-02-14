@@ -8,6 +8,6 @@ CORS(app)  # This enables CORS for all routes
 def ask_name():
     question = request.args.get('question', '')
     if question == "The Name?":
-        return "It's me"
+        return "It's meee"
     else:
         return "Invalid question"
