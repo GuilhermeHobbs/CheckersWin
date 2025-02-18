@@ -13,7 +13,7 @@ def ask_name():
     a = request.args.get('a', '')
     b = request.args.get('b', '')
     
-    return a+b+"hoooa"
+    return a+b+"huuuue"
 
 block_size = 80
 vocab_size = 66
