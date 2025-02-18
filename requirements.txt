@@ -2,4 +2,4 @@ flask
 flask-cors
 gunicorn
 pytorch
-torch.nn
+torch
