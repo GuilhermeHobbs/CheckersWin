@@ -14,7 +14,13 @@ def ask_name():
     b = request.args.get('b', '')
     
     return a+b
-    
+
+
+batch_size = 4 # how many independent sequences will we process in parallel?
+vocab_size = 66
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print ("Device is", device)
+
 block_size = 80
 max_iters = 20000
 eval_interval = 100
