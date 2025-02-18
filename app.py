@@ -13,7 +13,7 @@ def ask_name():
     a = request.args.get('a', '')
     b = request.args.get('b', '')
     
-    return a+b
+    return a+b+"hey"
 
 
 
