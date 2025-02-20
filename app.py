@@ -15,7 +15,7 @@ def ask_name():
     
     return a+b+"uauauauaua"
 
-block_size = 80
+block_size = 100
 vocab_size = 66
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print ("Deviiiiice is", device)
