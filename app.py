@@ -18,7 +18,7 @@ def ask_name():
 block_size = 80
 vocab_size = 66
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-print ("Deeevice is", device)
+print ("Deviiiiice is", device)
 
 # hyperparameters
 n_embd = 256 # 64
@@ -135,4 +135,21 @@ class BigramLanguageModel(nn.Module):
 model = BigramLanguageModel()
 m = model.to(device)
 # print the number of parameters in the model
-print(sum(p.numel() for p in m.parameters())/1e6, 'M parameters')
+
+m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
+
+model.eval()  # Disable dropout
+
+c = torch.Tensor([[0,23,30]]).int().to(device)  # ,21,28
+
+for _ in range(block_size-4):
+
+  logits, _ = m(c.int())
+  logits = logits[-1,-1] # becomes (C)
+
+  b = logits.argmax()
+  c = torch.cat([c, torch.Tensor([[b]]).to(device)], dim=1)
+  
+print (c)
+
+
