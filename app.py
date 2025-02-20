@@ -8,12 +8,6 @@ from torch.nn import functional as F
 app = Flask(__name__)
 CORS(app)  # This enables CORS for all routes
 
-@app.route('/move')
-def ask_name():
-    a = request.args.get('a', '')
-    b = request.args.get('b', '')
-    
-    return a+b+"uauauauaua"
 
 block_size = 100
 vocab_size = 66
@@ -152,4 +146,10 @@ for _ in range(block_size-4):
   
 print (c)
 
+@app.route('/move')
+def ask_name():
+    a = request.args.get('a', '')
+    b = request.args.get('b', '')
+    
+    return c
 
