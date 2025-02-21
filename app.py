@@ -149,6 +149,6 @@ def ask_name():
     a = request.args.get('a', '')
     b = request.args.get('b', '')
     
-    return c
+    return c.item()
 
 
