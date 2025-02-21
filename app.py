@@ -133,13 +133,4 @@ class BigramLanguageModel(nn.Module):
 
         return logits, loss
 
-model = BigramLanguageModel()
-m = model.to(device)
-# print the number of parameters in the model
-
-m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
-
-model.eval()  # Disable dropout
-
-c = torch.Tensor([[0,23,30]]).int().to(device)  # ,21,28
 
