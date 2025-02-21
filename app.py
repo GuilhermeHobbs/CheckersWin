@@ -139,7 +139,7 @@ c = torch.Tensor([[0]]).int().to(device)
 
   
 @app.route('/move')
-def ask_name():
+def ask_name(c):
     a = request.args.get('a', '')
     b = request.args.get('b', '')
 
