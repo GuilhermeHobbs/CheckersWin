@@ -134,7 +134,14 @@ m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
 
 model.eval()  # Disable dropout
 
-c = torch.Tensor([[0,23,30]]).int().to(device)  # ,21,28
+c = torch.Tensor([[0,23,30]]).int().to(device)  
+for _ in range(block_size-4):
+
+  logits, _ = m(c.int())
+  logits = logits[-1,-1] # becomes (C)
+
+  b = logits.argmax()
+  c = torch.cat([c, torch.Tensor([[b]]).to(device)], dim=1)
 
 
 @app.route('/move')
@@ -142,6 +149,6 @@ def ask_name():
     a = request.args.get('a', '')
     b = request.args.get('b', '')
     
-    return "HOOOOAAAAA"+a+b
+    return c
 
 
