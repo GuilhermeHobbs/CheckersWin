@@ -135,13 +135,13 @@ m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
 model.eval()  # Disable dropout
 
 c = torch.Tensor([[0,23,30]]).int().to(device)  
-for _ in range(block_size-4):
+#for _ in range(block_size-4):
 
-  logits, _ = m(c.int())
-  logits = logits[-1,-1] # becomes (C)
+  #logits, _ = m(c.int())
+  #logits = logits[-1,-1] # becomes (C)
 
-  b = logits.argmax()
-  c = torch.cat([c, torch.Tensor([[b]]).to(device)], dim=1)
+  #b = logits.argmax()
+  #c = torch.cat([c, torch.Tensor([[b]]).to(device)], dim=1)
 
 
 @app.route('/move')
