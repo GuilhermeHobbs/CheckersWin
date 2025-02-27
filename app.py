@@ -139,11 +139,15 @@ model.eval()  # Disable dropout
   
 @app.route('/move')
 def ask_name():
-    a = request.args.get('a', '')
-    b = request.args.get('b', '')
+    a = request.args.get('a', '0')  # Default value '0' to avoid errors
+    b = request.args.get('b', '0')
 
-    c = torch.Tensor([[0]]).int().to(device)  
-    c = torch.cat([c, torch.Tensor([[a.int(),b.int()]]).to(device)], dim=1)
+    a = int(a)  # Convert string to integer
+    b = int(b)
+
+    c = torch.tensor([[0]], dtype=torch.int).to(device)  # Correct tensor initialization
+    c = torch.cat([c, torch.tensor([[a, b]], dtype=torch.int).to(device)], dim=1)  # Proper tensor concatenation
+
     print("c=",c)
     
     #logits, _ = m(c.int())
