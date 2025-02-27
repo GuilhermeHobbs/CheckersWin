@@ -139,22 +139,19 @@ model.eval()  # Disable dropout
   
 @app.route('/move')
 def ask_name():
-    a = request.args.get('a', '0')  # Default value '0' to avoid errors
+    a = request.args.get('a', '0')  # Default to '0' if missing
     b = request.args.get('b', '0')
 
-    a = int(a)  # Convert string to integer
+    a = int(a)
     b = int(b)
 
-    c = torch.tensor([[0]], dtype=torch.int).to(device)  # Correct tensor initialization
-    c = torch.cat([c, torch.tensor([[a, b]], dtype=torch.int).to(device)], dim=1)  # Proper tensor concatenation
+    c = torch.tensor([[0]], dtype=torch.int, device=device)  # Ensure tensor on correct device
+    new_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
 
-    print("c=",c)
-    
-    #logits, _ = m(c.int())
-    #logits = logits[-1,-1] # becomes (C)
-    #b = logits.argmax()
-    #print("b=",b)
- 
-    return str(c.item())
+    c = torch.cat([c, new_tensor], dim=0)  # Concatenate along dim=0 to avoid shape mismatch
+
+    print("c =", c)
+
+    return str(c[-1].tolist())  # Convert last row to a list and return as string
 
 
