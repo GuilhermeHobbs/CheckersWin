@@ -148,7 +148,7 @@ def ask_name():
     c = torch.tensor([[0]], dtype=torch.int, device=device)  # Ensure tensor on correct device
     new_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
 
-    c = torch.cat([c, new_tensor], dim=0)  # Concatenate along dim=0 to avoid shape mismatch
+    #c = torch.cat([c, new_tensor], dim=0)  # Concatenate along dim=0 to avoid shape mismatch
 
     print("c =", c)
 
