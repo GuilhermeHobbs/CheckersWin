@@ -145,7 +145,7 @@ def ask_name():
     a = int(a)
     b = int(b)
 
-    x+=a
+    x+=1
     
     c = torch.tensor([[x]], dtype=torch.int, device=device)  # Ensure tensor on correct device
     new_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
@@ -154,6 +154,6 @@ def ask_name():
 
     print("c =", c)
 
-    return str(c[-1].tolist())  # Convert last row to a list and return as string
+    return str(x)     #c[-1].tolist())  # Convert last row to a list and return as string
 
 
