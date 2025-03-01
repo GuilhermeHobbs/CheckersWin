@@ -135,7 +135,7 @@ m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
 
 model.eval()  # Disable dropout
 
-
+x=0
   
 @app.route('/move')
 def ask_name():
@@ -145,7 +145,9 @@ def ask_name():
     a = int(a)
     b = int(b)
 
-    c = torch.tensor([[0]], dtype=torch.int, device=device)  # Ensure tensor on correct device
+    x+=a
+    
+    c = torch.tensor([[x]], dtype=torch.int, device=device)  # Ensure tensor on correct device
     new_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
 
     #c = torch.cat([c, new_tensor], dim=0)  # Concatenate along dim=0 to avoid shape mismatch
