@@ -135,27 +135,26 @@ m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
 
 model.eval()  # Disable dropout
 
-x=0
+context = torch.Tensor([[0]]).int().to(device)  
+  
   
 @app.route('/move')
 def ask_name():
-    global x
+    global context
     
-    a = request.args.get('a', '0')  # Default to '0' if missing
-    b = request.args.get('b', '0')
+    a = request.args.get('a', '')  
+    b = request.args.get('b', '')
 
     a = int(a)
     b = int(b)
-
-    x+=1
+    context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
     
-    c = torch.tensor([[x]], dtype=torch.int, device=device)  # Ensure tensor on correct device
-    new_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
+    logits, _ = m(context.int())
+    logits = logits[-1,-1] 
 
-    c = torch.cat([c, new_tensor], dim=0)  # Concatenate along dim=0 to avoid shape mismatch
-
-    print("c =", c)
-
-    return str(c[-1].tolist())  # Convert last row to a list and return as string
+    c = logits.argmax()
+    print(c)
+  
+    return str(c.tolist())  # Convert last row to a list and return as string
 
 
