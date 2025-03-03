@@ -147,12 +147,12 @@ def ask_name():
 
     x+=1
     
-    c = torch.tensor([[x]], dtype=torch.int, device=device)  # Ensure tensor on correct device
-    new_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
+    #c = torch.tensor([[x]], dtype=torch.int, device=device)  # Ensure tensor on correct device
+    #new_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
 
     #c = torch.cat([c, new_tensor], dim=0)  # Concatenate along dim=0 to avoid shape mismatch
 
-    print("c =", c)
+    #print("c =", c)
 
     return str(x)     #c[-1].tolist())  # Convert last row to a list and return as string
 
