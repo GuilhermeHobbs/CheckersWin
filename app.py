@@ -150,7 +150,7 @@ def ask_name():
     x+=1
     
     c = torch.tensor([[x]], dtype=torch.int, device=device)  # Ensure tensor on correct device
-    w_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
+    new_tensor = torch.tensor([[a, b]], dtype=torch.int, device=device)  # Proper shape
 
     c = torch.cat([c, new_tensor], dim=0)  # Concatenate along dim=0 to avoid shape mismatch
 
