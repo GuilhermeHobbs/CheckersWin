@@ -139,6 +139,8 @@ x=0
   
 @app.route('/move')
 def ask_name():
+    global x
+    
     a = request.args.get('a', '0')  # Default to '0' if missing
     b = request.args.get('b', '0')
 
