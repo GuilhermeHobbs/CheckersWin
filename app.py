@@ -138,7 +138,10 @@ m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
 model.eval()  # Disable dropout
 
 context = torch.Tensor([[0]]).int().to(device)  
+
 print("anteeeess")
+nn.LayerNorm(3)
+print("depois")
   
 @app.route('/move')
 def ask_name():
