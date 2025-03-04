@@ -112,23 +112,10 @@ class BigramLanguageModel(nn.Module):
         print("FORWARD")
         
         B, T = idx.shape
-
-        # idx and targets are both (B,T) tensor of integers
-        tok_emb = self.token_embedding_table(idx) # (B,T,C)
-        pos_emb = self.position_embedding_table(torch.arange(T, device=device)) # (T,C)
-        x = tok_emb + pos_emb # (B,T,C)
-        x = self.blocks(x) # (B,T,C)
-        x = self.ln_f(x) # (B,T,C)
-        logits = self.lm_head(x) # (B,T,vocab_size)
-
-        if targets is None:
-            loss = None
-        else:
-            B, T, C = logits.shape
-            logits = logits.view(B*T, C)
-            targets = targets.view(B*T)
-            loss = F.cross_entropy(logits, targets)
-
+    
+       
+        logits = 1
+        loss = 0
         return logits, loss
 
 model = BigramLanguageModel()
@@ -155,7 +142,7 @@ def ask_name():
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
 
     print("before")
-    #logits, _ = m(context.int())
+    logits, _ = m(context.int())
     print("HEEEERE")
     #logits = logits[-1,-1] 
 
