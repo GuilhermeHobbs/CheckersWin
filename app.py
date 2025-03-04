@@ -153,7 +153,8 @@ def ask_name():
     a = int(a)
     b = int(b)
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
-    
+
+    print("before")
     logits, _ = m(context.int())
     print("HEEEERE")
     logits = logits[-1,-1] 
