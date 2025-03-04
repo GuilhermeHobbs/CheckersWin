@@ -149,11 +149,11 @@ def ask_name():
     b = int(b)
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
     
-    #logits, _ = m(context.int())
-    #logits = logits[-1,-1] 
+    logits, _ = m(context.int())
+    logits = logits[-1,-1] 
 
-    #c = logits.argmax()
-    #print(c)
+    c = logits.argmax()
+    print(c)
   
     return str(context.tolist())  # Convert last row to a list and return as string
 
