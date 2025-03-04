@@ -60,9 +60,10 @@ class MultiHeadAttention(nn.Module):
     
     def forward(self, x):
         print("forward MultiHeadAttention")
-        out = torch.cat([h(x) for h in self.heads], dim=-1)
-        print("forward MultiHeadAttention 2")
-        out = self.dropout(self.proj(out))
+        #out = torch.cat([h(x) for h in self.heads], dim=-1)
+        #print("forward MultiHeadAttention 2")
+        #out = self.dropout(self.proj(out))
+        out = 0
         return out
 
 class FeedFoward(nn.Module):
