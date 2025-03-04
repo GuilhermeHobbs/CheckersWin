@@ -13,7 +13,6 @@ CORS(app)  # This enables CORS for all routes
 block_size = 100
 vocab_size = 66
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-print ("Deviiiiice is", device)
 
 # hyperparameters
 n_embd = 256 # 64
@@ -136,7 +135,7 @@ m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
 model.eval()  # Disable dropout
 
 context = torch.Tensor([[0]]).int().to(device)  
-  
+print("CHEGOU AQUI")  
   
 @app.route('/move')
 def ask_name():
