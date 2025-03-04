@@ -115,6 +115,8 @@ class BigramLanguageModel(nn.Module):
         pos_emb = self.position_embedding_table(torch.arange(T, device=device)) # (T,C)
         x = tok_emb + pos_emb # (B,T,C)
         print("EMBEDDINGGG")
+        x = self.blocks(x) # (B,T,C)
+        print("BLOCKS")
         
         logits = 1
         loss = 0
