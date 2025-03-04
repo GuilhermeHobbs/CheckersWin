@@ -97,7 +97,8 @@ class Block(nn.Module):
     
     def forward(self, x):
         print("forward BLOCK")
-        print(self.ln1(x))
+        print(x.shape)
+        #print(self.ln1(x))
         print("forward BLOCK END")
        # x = x + self.sa(self.ln1(x))
        # x = x + self.ffwd(self.ln2(x))
@@ -141,9 +142,6 @@ model.eval()  # Disable dropout
 
 context = torch.Tensor([[0]]).int().to(device)  
 
-print("anteeeess")
-nn.LayerNorm(3)
-print("depois")
   
 @app.route('/move')
 def ask_name():
