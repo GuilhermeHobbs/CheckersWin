@@ -97,7 +97,7 @@ class Block(nn.Module):
     
     def forward(self, x):
         print("forward BLOCK")
-        x = x + self.sa(self.ln1(x))
+       # x = x + self.sa(self.ln1(x))
        # x = x + self.ffwd(self.ln2(x))
         return x
 # super simple bigram model
