@@ -110,6 +110,10 @@ class BigramLanguageModel(nn.Module):
     
     def forward(self, idx, targets=None):
         print("FORWARD")
+        tok_emb = self.token_embedding_table(idx) # (B,T,C)
+        pos_emb = self.position_embedding_table(torch.arange(T, device=device)) # (T,C)
+        x = tok_emb + pos_emb # (B,T,C)
+        print("EMBEDDINGGG")
         
         B, T = idx.shape
     
