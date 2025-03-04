@@ -106,7 +106,8 @@ class BigramLanguageModel(nn.Module):
         self.blocks = nn.Sequential(*[Block(n_embd, n_head=n_head) for _ in range(n_layer)])
         self.ln_f = nn.LayerNorm(n_embd) # final layer norm
         self.lm_head = nn.Linear(n_embd, vocab_size)
-
+        print("ENDED")
+    
     def forward(self, idx, targets=None):
         print("FORWARD")
         
