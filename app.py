@@ -89,17 +89,18 @@ class Block(nn.Module):
         self.ffwd = FeedFoward(n_embd)
         self.ln1 = nn.LayerNorm(n_embd)
         self.ln2 = nn.LayerNorm(n_embd)
-
+        print("end init BLOCK")
+    
     def forward(self, x):
         print("forward BLOCK")
-        x = x + self.sa(self.ln1(x))
-        x = x + self.ffwd(self.ln2(x))
+       # x = x + self.sa(self.ln1(x))
+       # x = x + self.ffwd(self.ln2(x))
         return x
 # super simple bigram model
 class BigramLanguageModel(nn.Module):
 
     def __init__(self):
-        print("INIT")    
+        
         
         super().__init__()
         # each token directly reads off the logits for the next token from a lookup table
@@ -108,7 +109,7 @@ class BigramLanguageModel(nn.Module):
         self.blocks = nn.Sequential(*[Block(n_embd, n_head=n_head) for _ in range(n_layer)])
         self.ln_f = nn.LayerNorm(n_embd) # final layer norm
         self.lm_head = nn.Linear(n_embd, vocab_size)
-        print("ENDED")
+       
     
     def forward(self, idx, targets=None):
         B, T = idx.shape
