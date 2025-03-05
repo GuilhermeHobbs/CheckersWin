@@ -146,17 +146,15 @@ context = torch.Tensor([[0]]).int().to(device)
 
 logits, _ = m(context.int())
 print("HEEEERE")
-logits = logits[-1,-1] 
 print(logits)
 print("agora vai")
   
 @app.route('/move')
 def ask_name():
     print("aloooo")
-    temp = torch.rand([1, 3, 256])
-    print("SHAPE:",temp.shape)
-    lala = nn.LayerNorm(256)
-    print(lala(temp))
+    logits, _ = m(context.int())
+    print(logits)
+    
     return "hello"
 
 if __name__ == '__main__':
