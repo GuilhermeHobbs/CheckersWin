@@ -95,11 +95,11 @@ class Block(nn.Module):
         print("end init BLOCK")
     
     def forward(self, x):
-        print("fooooorward BLOCK")
-        print(self.ln1(x))
-        print("forward BLOCK END")
-       # x = x + self.sa(self.ln1(x))
-       # x = x + self.ffwd(self.ln2(x))
+        print("fooooorward BLOCK") 
+        x = x + self.sa(self.ln1(x))
+        x = x + self.ffwd(self.ln2(x))
+        print(x)
+        print("Deo Gratias.")
         return x
 # super simple bigram model
 class BigramLanguageModel(nn.Module):
