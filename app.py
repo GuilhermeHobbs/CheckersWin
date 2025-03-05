@@ -7,7 +7,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 
-temp = torch.rand([1, 3, 10])
+temp = torch.rand([1, 3, 256])
 print("SHAAAPE:",temp.shape)
-lala = nn.LayerNorm(10)
+lala = nn.LayerNorm(256)
 print(lala(temp))
