@@ -6,12 +6,6 @@ import torch
 import torch.nn as nn
 from torch.nn import functional as F
 
-temp = torch.rand([1, 3, 256])
-print("SHAPE:",temp.shape)
-lala = nn.LayerNorm(256)
-print(lala(temp))
-
-
 app = Flask(__name__)
 CORS(app)  # This enables CORS for all routes
 
@@ -150,28 +144,14 @@ model.eval()  # Disable dropout
 
 context = torch.Tensor([[0]]).int().to(device)  
 
+print("antes")
   
 @app.route('/move')
 def ask_name():
-    global context
-    global m
-    
-    a = request.args.get('a', '')  
-    b = request.args.get('b', '')
-
-    a = int(a)
-    b = int(b)
-    context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
-
-    print("before")
-    logits, _ = m(context.int())
-    print("HEEEERE")
-    #logits = logits[-1,-1] 
-
-    #c = logits.argmax()
-    #print(c)
-  
-    return str(context.tolist())  # Convert last row to a list and return as string
+    temp = torch.rand([1, 3, 256])
+    print("SHAPE:",temp.shape)
+    lala = nn.LayerNorm(256)
+    print(lala(temp))
 
 
 if __name__ == '__main__':
