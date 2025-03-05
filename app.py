@@ -59,10 +59,9 @@ class MultiHeadAttention(nn.Module):
     
     def forward(self, x):
         print("forward MultiHeadAttention")
-        #out = torch.cat([h(x) for h in self.heads], dim=-1)
-        #print("forward MultiHeadAttention 2")
-        #out = self.dropout(self.proj(out))
-        out = 0
+        out = torch.cat([h(x) for h in self.heads], dim=-1)
+        print("forward MultiHeadAttention 2")
+        out = self.dropout(self.proj(out))
         return out
 
 class FeedFoward(nn.Module):
@@ -105,8 +104,7 @@ class Block(nn.Module):
 class BigramLanguageModel(nn.Module):
 
     def __init__(self):
-        
-        
+                
         super().__init__()
         # each token directly reads off the logits for the next token from a lookup table
         self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
@@ -126,8 +124,6 @@ class BigramLanguageModel(nn.Module):
         x = self.blocks(x) # (B,T,C)
         print("BLOCKS")
         
-        logits = 1
-        loss = 0
         return logits, loss
 
 model = BigramLanguageModel()
@@ -140,16 +136,14 @@ model.eval()  # Disable dropout
 
 context = torch.Tensor([[0]]).int().to(device)  
 
-logits, _ = m(context.int())
-print("HEEEERE")
-print(logits)
-print("agora vai")
-  
+
 @app.route('/move')
 def ask_name():
     print("aloooo")
     logits, _ = m(context.int())
     print(logits)
+
+    print("Eh assim")
     
     return "hello"
 
