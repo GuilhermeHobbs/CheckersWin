@@ -97,7 +97,9 @@ class Block(nn.Module):
     
     def forward(self, x):
         print("forward BLOOOOCK")
-        print(x.shape, x)
+        temp = torch.rand([1, 3, 256])
+        print(x.shape,temp.shape, x)
+        print(self.ln1(temp))
         #print(self.ln1(x))
         print("forward BLOCK END")
        # x = x + self.sa(self.ln1(x))
