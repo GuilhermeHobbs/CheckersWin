@@ -8,6 +8,6 @@ from torch.nn import functional as F
 
 
 temp = torch.rand([1, 3, 10])
-print("SHAAAPE:",x.shape,temp.shape)
+print("SHAAAPE:",temp.shape)
 lala = nn.LayerNorm(10)
 print(lala(temp))
