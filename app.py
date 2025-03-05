@@ -168,8 +168,13 @@ def ask_name():
     b = int(b)
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
 
+    temp = torch.rand([1, 3, 256])
+    print("SHAAAPE:",temp.shape)
+    lala = nn.LayerNorm(256)
+    print(lala(temp))
+    
     print("before")
-    logits, _ = m(context.int())
+    #logits, _ = m(context.int())
     print("HEEEERE")
     #logits = logits[-1,-1] 
 
