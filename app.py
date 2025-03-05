@@ -148,11 +148,12 @@ print("antes")
   
 @app.route('/move')
 def ask_name():
+    print("aloooo")
     temp = torch.rand([1, 3, 256])
     print("SHAPE:",temp.shape)
     lala = nn.LayerNorm(256)
     print(lala(temp))
-
+    return "hello"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)  # Render requires explicit host/port
