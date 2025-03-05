@@ -97,7 +97,7 @@ class Block(nn.Module):
     
     def forward(self, x):
         print("forward BLOOOOCK")
-        temp = torch.rand([1, 3, 256])
+        temp = torch.rand([1, 3, 10])
         print("SHAAAPE:",x.shape,temp.shape)
         lala = nn.LayerNorm(10)
         print(lala(temp))
