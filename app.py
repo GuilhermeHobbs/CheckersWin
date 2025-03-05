@@ -96,9 +96,9 @@ class Block(nn.Module):
         print("end init BLOCK")
     
     def forward(self, x):
-        print("forward BLOCK")
-        print(x.shape)
-        #print(self.ln1(x))
+        print("forward BLOOOOCK")
+        #print(x.shape)
+        print(self.ln1(x))
         print("forward BLOCK END")
        # x = x + self.sa(self.ln1(x))
        # x = x + self.ffwd(self.ln2(x))
