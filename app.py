@@ -99,7 +99,7 @@ class Block(nn.Module):
         print("forward BLOOOOCK")
         temp = torch.rand([1, 3, 256])
         print("SHAAAPE:",x.shape,temp.shape)
-        #print(self.ln1(temp))
+        print(self.ln1(temp))
         #print(self.ln1(x))
         print("forward BLOCK END")
        # x = x + self.sa(self.ln1(x))
