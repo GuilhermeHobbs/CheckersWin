@@ -13,7 +13,10 @@ block_size = 100
 vocab_size = 66
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-# hyperparameters
+max_iters = 15000
+eval_interval = 100
+learning_rate = 1e-3
+eval_iters = 600
 n_embd = 256 # 64
 n_head = 8  # 4
 n_layer = 8
@@ -21,6 +24,18 @@ dropout = 0.2
 # ------------
 
 @torch.no_grad()
+def estimate_loss():
+    out = {}
+    model.eval()
+    for split in ['train', 'val']:
+        losses = torch.zeros(eval_iters)
+        for k in range(eval_iters):
+            X, Y = get_batch(split)
+            logits, loss = model(X, Y)
+            losses[k] = loss.item()
+        out[split] = losses.mean()
+    model.train()
+    return out
 
 class Head(nn.Module):
     """ one head of self-attention """
@@ -47,6 +62,7 @@ class Head(nn.Module):
         v = self.value(x) # (B,T,C)
         out = wei @ v # (B, T, T) @ (B, T, C) -> (B, T, C)
         return out
+
 class MultiHeadAttention(nn.Module):
     """ multiple heads of self-attention in parallel """
 
@@ -55,12 +71,9 @@ class MultiHeadAttention(nn.Module):
         self.heads = nn.ModuleList([Head(head_size) for _ in range(num_heads)])
         self.proj = nn.Linear(n_embd, n_embd)
         self.dropout = nn.Dropout(dropout)
-        print("init MultiHeadAttention")
-    
+
     def forward(self, x):
-        print("forward MultiHeadAttention")
         out = torch.cat([h(x) for h in self.heads], dim=-1)
-        print("forward MultiHeadAttention 2")
         out = self.dropout(self.proj(out))
         return out
 
@@ -85,26 +98,21 @@ class Block(nn.Module):
     def __init__(self, n_embd, n_head):
         # n_embd: embedding dimension, n_head: the number of heads we'd like
         super().__init__()
-        print("init BLOCK")
         head_size = n_embd // n_head
         self.sa = MultiHeadAttention(n_head, head_size)
         self.ffwd = FeedFoward(n_embd)
         self.ln1 = nn.LayerNorm(n_embd)
         self.ln2 = nn.LayerNorm(n_embd)
-        print("end init BLOCK")
-    
+
     def forward(self, x):
-        print("fooooorward BLOCK") 
         x = x + self.sa(self.ln1(x))
         x = x + self.ffwd(self.ln2(x))
-        print(x)
-        print("Deo Gratias.")
         return x
+
 # super simple bigram model
 class BigramLanguageModel(nn.Module):
 
     def __init__(self):
-                
         super().__init__()
         # each token directly reads off the logits for the next token from a lookup table
         self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
@@ -112,23 +120,31 @@ class BigramLanguageModel(nn.Module):
         self.blocks = nn.Sequential(*[Block(n_embd, n_head=n_head) for _ in range(n_layer)])
         self.ln_f = nn.LayerNorm(n_embd) # final layer norm
         self.lm_head = nn.Linear(n_embd, vocab_size)
-       
-    
+
     def forward(self, idx, targets=None):
         B, T = idx.shape
-        print("FORWARD")
+
+        # idx and targets are both (B,T) tensor of integers
         tok_emb = self.token_embedding_table(idx) # (B,T,C)
         pos_emb = self.position_embedding_table(torch.arange(T, device=device)) # (T,C)
         x = tok_emb + pos_emb # (B,T,C)
-        print("EMBEDDINGGG")
         x = self.blocks(x) # (B,T,C)
-        print("BLOCKS")
-        
+        x = self.ln_f(x) # (B,T,C)
+        logits = self.lm_head(x) # (B,T,vocab_size)
+
+        if targets is None:
+            loss = None
+        else:
+            B, T, C = logits.shape
+            logits = logits.view(B*T, C)
+            targets = targets.view(B*T)
+            loss = F.cross_entropy(logits, targets)
+
         return logits, loss
+
 
 model = BigramLanguageModel()
 m = model.to(device)
-# print the number of parameters in the model
 
 m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
 
