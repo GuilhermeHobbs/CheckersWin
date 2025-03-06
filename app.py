@@ -12,8 +12,8 @@ CORS(app)  # This enables CORS for all routes
   
 @app.route('/move')
 def ask_name():
-    print("Eiiiii")
-    
+    app.logger.info("Eiiiii")  # Use Flask's logger instead of print
+  
     return "HELLO"
   
 if __name__ == '__main__':
