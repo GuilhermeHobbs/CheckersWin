@@ -152,12 +152,13 @@ model.eval()  # Disable dropout
 
 context = torch.Tensor([[0]]).int().to(device)  
 
+print("Uéeee")
 
 @app.route('/move')
 def ask_name():
     print("aloooo")
-    logits, _ = m(context.int())
-    print(logits)
+    #logits, _ = m(context.int())
+    #print(logits)
 
     print("Eh assim")
     
