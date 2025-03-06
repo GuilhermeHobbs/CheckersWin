@@ -15,4 +15,6 @@ def ask_name():
     print("Eiiiii")
     
     return "HELLO"
-
+  
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=10000)  # Render requires explicit host/port
