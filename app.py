@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)  # This enables CORS for all routes
 
 block_size = 100
-vocab_size = 66
+vocab_size = 34
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 max_iters = 15000
@@ -25,20 +25,17 @@ n_layer = 8
 dropout = 0.2
 # ------------
 
-@torch.no_grad()
-def estimate_loss():
-    out = {}
-    model.eval()
-    for split in ['train', 'val']:
-        losses = torch.zeros(eval_iters)
-        for k in range(eval_iters):
-            X, Y = get_batch(split)
-            logits, loss = model(X, Y)
-            losses[k] = loss.item()
-        out[split] = losses.mean()
-    model.train()
-    return out
+max_iters = 15000
+eval_interval = 100
+learning_rate = 1e-3
+eval_iters = 600
+n_embd = 400 # 64
+n_head = 16  # 4
+n_layer = 12 # 8
+dropout = 0.2
+# ------------
 
+@torch.no_grad()
 class Head(nn.Module):
     """ one head of self-attention """
 
@@ -148,7 +145,7 @@ class BigramLanguageModel(nn.Module):
 model = BigramLanguageModel()
 m = model.to(device)
 
-m.load_state_dict(torch.load('win4.pth', map_location=torch.device('cpu')))
+ m.load_state_dict(torch.load('winMINI.pth', map_location=torch.device('cpu')))
 
 model.eval()  # Disable dropout
 
