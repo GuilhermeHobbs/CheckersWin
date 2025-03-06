@@ -4,6 +4,8 @@ from flask_cors import CORS
 import numpy as np
 import torch
 import torch.nn as nn
+import sys
+
 from torch.nn import functional as F
 
 app = Flask(__name__)
@@ -156,11 +158,14 @@ print("antess")
 
 @app.route('/move')
 def ask_name():
-    print("aloooo")
+    print("aloooo", flush=True)
     logits, _ = m(context.int())
-    print(logits)
+    print(logits, flush=True)  # Force immediate flushing
+    
 
-    print("Eh assimmmm")
+    print("Eh assimmmm", flush=True)  # Force immediate flushing
+    sys.stdout.flush()  # Additional explicit flush
+
     
     return "hello"
 
