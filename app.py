@@ -177,15 +177,28 @@ def ask_name():
         logits = logits[-1,-1] 
         f = logits.argmax()
         context = torch.cat([context, torch.Tensor([[f]]).to(device)], dim=1)
-    
+
+        logits, _ = m(context.int())
+        logits = logits[-1,-1] 
+        g = logits.argmax()
+        context = torch.cat([context, torch.Tensor([[g]]).to(device)], dim=1)
+            
+        if g==33:
+            logits, _ = m(context.int())
+            logits = logits[-1,-1] 
+            h = logits.argmax()
+            context = torch.cat([context, torch.Tensor([[h]]).to(device)], dim=1)        
+
     
     print("Cooontext:",context, flush=True)  # Force immediate flushing
     sys.stdout.flush()
     
-    if e==33:
-        return str(d.item())+"-"+str(e.item())+"-"+str(f.item())
+    if e==33 and g==33:
+        return str(d.item())+"-33-"+str(f.item())+"-33-"+str(h.item())
+    else if e==33:
+        return str(d.item())+"-33-"+str(f.item())
     else:
-        return str(d.item())+"-"+str(e.item())
+        return str(d.item())+str(e.item())
 
 
 if __name__ == '__main__':
