@@ -152,16 +152,23 @@ def ask_name():
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
     print(context)
     
-    print("before")
     logits, _ = m(context.int())
     print("HEEEERE")
     logits = logits[-1,-1] 
-
     c = logits.argmax()
     print(c)
-  
-    return str(context.tolist())  # Convert last row to a list and return as string
 
+    context = torch.cat([context, torch.Tensor([[c]]).to(device)], dim=1)
+
+    logits, _ = m(context.int())
+    print("HEEEERE 2")
+    logits = logits[-1,-1] 
+    d = logits.argmax()
+    print(d)
+
+    context = torch.cat([context, torch.Tensor([[d]]).to(device)], dim=1)
+  
+    return c+"-"+d  
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)  # Render requires explicit host/port
