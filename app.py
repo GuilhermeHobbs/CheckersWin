@@ -157,6 +157,7 @@ def ask_name():
  
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
     if c != '':
+        c = int(c)
         context = torch.cat([context, torch.Tensor([[c]]).to(device)], dim=1)
     
     logits, _ = m(context.int())
