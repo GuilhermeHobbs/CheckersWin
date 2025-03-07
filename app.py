@@ -146,31 +146,46 @@ def ask_name():
     
     a = request.args.get('a', '')  
     b = request.args.get('b', '')
-
+    c = request.args.get('c', '')
+    
     a = int(a)
     if a==0:
         context = torch.Tensor([[0]]).int().to(device)
         return ""
-
         
-    b = int(b)    
+    b = int(b)   
+ 
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
+    if c != '':
+        context = torch.cat([context, torch.Tensor([[c]]).to(device)], dim=1)
     
-    logits, _ = m(context.int())
-    logits = logits[-1,-1] 
-    c = logits.argmax()
-    
-    context = torch.cat([context, torch.Tensor([[c]]).to(device)], dim=1)
-
     logits, _ = m(context.int())
     logits = logits[-1,-1] 
     d = logits.argmax()
-
+    
     context = torch.cat([context, torch.Tensor([[d]]).to(device)], dim=1)
+
+    logits, _ = m(context.int())
+    logits = logits[-1,-1] 
+    e = logits.argmax()
+
+    context = torch.cat([context, torch.Tensor([[e]]).to(device)], dim=1)
+
+    if e==33:
+        logits, _ = m(context.int())
+        logits = logits[-1,-1] 
+        f = logits.argmax()
+        context = torch.cat([context, torch.Tensor([[f]]).to(device)], dim=1)
+    
+    
     print("Cooontext:",context, flush=True)  # Force immediate flushing
     sys.stdout.flush()
     
-    return str(c.item())+"-"+str(d.item())  
+    if e==33:
+        return str(d.item())+"-"+str(e.item())+"-"+str(f.item())
+    else:
+        return str(d.item())+"-"+str(e.item())
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)  # Render requires explicit host/port
