@@ -15,20 +15,6 @@ block_size = 100
 vocab_size = 34
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-max_iters = 15000
-eval_interval = 100
-learning_rate = 1e-3
-eval_iters = 600
-n_embd = 256 # 64
-n_head = 8  # 4
-n_layer = 8
-dropout = 0.2
-# ------------
-
-max_iters = 15000
-eval_interval = 100
-learning_rate = 1e-3
-eval_iters = 600
 n_embd = 400 # 64
 n_head = 16  # 4
 n_layer = 12 # 8
