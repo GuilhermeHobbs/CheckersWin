@@ -198,7 +198,7 @@ def ask_name():
     elif e==33:
         return str(d.item())+"-33-"+str(f.item())
     else:
-        return str(d.item())+str(e.item())
+        return str(d.item())+"-"+str(e.item())
 
 
 if __name__ == '__main__':
