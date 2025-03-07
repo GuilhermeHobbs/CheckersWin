@@ -148,12 +148,12 @@ def ask_name():
     b = request.args.get('b', '')
 
     a = int(a)
-    b = int(b)
-       
     if a==0:
         context = torch.Tensor([[0]]).int().to(device)
         return ""
-    
+
+        
+    b = int(b)    
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
     
     logits, _ = m(context.int())
