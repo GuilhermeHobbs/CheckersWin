@@ -155,16 +155,27 @@ print("antess")
 
 @app.route('/move')
 def ask_name():
-    print("aloooo", flush=True)
+    global context
+    global m
+    
+    a = request.args.get('a', '')  
+    b = request.args.get('b', '')
+
+    a = int(a)
+    b = int(b)
+    context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
+    print(context)
+    
+    print("before")
     logits, _ = m(context.int())
-    print(logits, flush=True)  # Force immediate flushing
-    
+    print("HEEEERE")
+    logits = logits[-1,-1] 
 
-    print("Eh assimmmm", flush=True)  # Force immediate flushing
-    sys.stdout.flush()  # Additional explicit flush
+    c = logits.argmax()
+    print(c)
+  
+    return str(context.tolist())  # Convert last row to a list and return as string
 
-    
-    return "hello"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)  # Render requires explicit host/port
