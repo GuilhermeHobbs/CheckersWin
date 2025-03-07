@@ -195,7 +195,7 @@ def ask_name():
     
     if e==33 and g==33:
         return str(d.item())+"-33-"+str(f.item())+"-33-"+str(h.item())
-    else if e==33:
+    elif e==33:
         return str(d.item())+"-33-"+str(f.item())
     else:
         return str(d.item())+str(e.item())
