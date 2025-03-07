@@ -150,24 +150,21 @@ def ask_name():
     a = int(a)
     b = int(b)
     context = torch.cat([context, torch.Tensor([[a,b]]).to(device)], dim=1)
-    print(context)
     
     logits, _ = m(context.int())
-    print("HEEEERE")
     logits = logits[-1,-1] 
     c = logits.argmax()
-    print(c)
-
+    
     context = torch.cat([context, torch.Tensor([[c]]).to(device)], dim=1)
 
     logits, _ = m(context.int())
-    print("HEEEERE 2")
     logits = logits[-1,-1] 
     d = logits.argmax()
-    print(d)
 
     context = torch.cat([context, torch.Tensor([[d]]).to(device)], dim=1)
-  
+    print("Cooontext:",context, flush=True)  # Force immediate flushing
+    sys.stdout.flush()
+    
     return str(c.item())+"-"+str(d.item())  
 
 if __name__ == '__main__':
