@@ -168,7 +168,7 @@ def ask_name():
 
     context = torch.cat([context, torch.Tensor([[d]]).to(device)], dim=1)
   
-    return c+"-"+d  
+    return c.item()+"-"+d.item()  
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)  # Render requires explicit host/port
